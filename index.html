@@ -168,6 +168,76 @@
       .process-media{display:none;grid-column:2;grid-row:2;margin-top:1rem;max-width:42rem;aspect-ratio:16/10}
       .process-step.is-active .process-media{display:block}
     }
+    /* Editorial motion and a meeting form that stays readable at every width. */
+    .site-header::before{content:"";position:fixed;top:0;left:0;width:100%;height:3px;background:var(--forest);transform:scaleX(var(--scroll-progress,0));transform-origin:left;pointer-events:none}
+    .site-header:not(.is-scrolled)::before{background:var(--paper)}
+    .meeting-dialog{width:min(72rem,94vw);max-width:72rem;max-height:92dvh;overflow:auto;box-shadow:0 2.5rem 6rem rgba(8,35,27,.26)}
+    .meeting-dialog-inner{grid-template-columns:minmax(0,.88fr) minmax(0,1.12fr);min-height:min(42rem,86dvh)}
+    .meeting-intro{position:relative;min-width:0;overflow:hidden;padding:clamp(2rem,4vw,4rem)}
+    .meeting-intro::after{content:"";position:absolute;right:-6rem;bottom:-10rem;width:23rem;aspect-ratio:1;border:1px solid rgba(243,240,233,.17);border-radius:50%;box-shadow:0 0 0 3rem rgba(243,240,233,.035),0 0 0 6rem rgba(243,240,233,.025);pointer-events:none}
+    .meeting-intro h2{position:relative;z-index:1;max-width:11ch;font-size:clamp(2.35rem,3.25vw,4rem);line-height:.9;letter-spacing:-.065em;text-wrap:balance;overflow-wrap:normal}
+    .meeting-intro p{position:relative;z-index:1;max-width:23rem;font-size:.79rem}
+    .meeting-form{min-width:0;padding:clamp(2rem,4vw,4rem)}
+    .meeting-form::before,.meeting-form::after{content:"";position:absolute;left:0;top:0;height:3px;background:var(--forest);pointer-events:none}
+    .meeting-form::before{width:100%;opacity:.13}
+    .meeting-form::after{width:33.333%;transition:width .55s cubic-bezier(.2,.75,.2,1)}
+    .meeting-dialog[data-step="1"] .meeting-form::after{width:66.666%}
+    .meeting-dialog[data-step="2"] .meeting-form::after,.meeting-dialog:has(.meeting-success:not([hidden])) .meeting-form::after{width:100%}
+    .meeting-fieldset:not([hidden]),.meeting-success:not([hidden]){animation:meeting-step-enter .48s cubic-bezier(.16,1,.3,1) both}
+    .meeting-option{overflow:hidden}
+    .meeting-option span{position:relative;padding:1rem 2.6rem 1rem .65rem;font-size:.84rem;transition:background-color .32s ease,color .32s ease,padding-left .32s cubic-bezier(.16,1,.3,1)}
+    .meeting-option span::after{content:"↗";position:absolute;right:.8rem;top:50%;transform:translate(-.45rem,-50%);opacity:0;transition:transform .3s ease,opacity .3s ease}
+    .meeting-option:hover span,.meeting-option input:checked+span{padding-left:1.15rem;background:var(--forest);color:var(--paper)}
+    .meeting-option:hover span::after,.meeting-option input:checked+span::after{transform:translate(0,-50%);opacity:1}
+    .meeting-actions button{transition:transform .28s cubic-bezier(.16,1,.3,1),background-color .28s ease,color .28s ease}
+    .meeting-actions .meeting-next:hover,.meeting-actions .meeting-submit:hover{transform:translateY(-3px);background:transparent;color:var(--forest)}
+    .meeting-actions .meeting-back:hover{transform:translateX(-4px)}
+    .meeting-dialog[open]{animation:meeting-open .58s cubic-bezier(.16,1,.3,1) both}
+    .meeting-dialog[open]::backdrop{animation:meeting-backdrop .45s ease both}
+    .meeting-dialog[open] .meeting-intro>*{animation:meeting-copy .65s cubic-bezier(.16,1,.3,1) both}
+    .meeting-dialog[open] .meeting-intro h2{animation-delay:.09s}
+    .meeting-dialog[open] .meeting-intro p{animation-delay:.16s}
+    .hero-photo img{animation:hero-arrive 1.6s cubic-bezier(.16,1,.3,1) both}
+    .hero-copy h1{animation:heading-arrive 1.05s .12s cubic-bezier(.16,1,.3,1) both}
+    .project-photo img{clip-path:inset(0 0 100% 0);transform:scale(1.12);transition:clip-path 1.05s cubic-bezier(.16,1,.3,1),transform 1.5s cubic-bezier(.16,1,.3,1)}
+    .project.revealed .project-photo img{clip-path:inset(0);transform:scale(1)}
+    .project.revealed:hover .project-photo img{transform:scale(1.045)}
+    .project-info>*{transition:transform .55s cubic-bezier(.16,1,.3,1),opacity .55s ease}
+    .project:not(.revealed) .project-info>*{opacity:0;transform:translateY(1.5rem)}
+    .project.revealed .project-info>*:nth-child(2){transition-delay:.11s}
+    .project.revealed .project-info>*:nth-child(3){transition-delay:.2s}
+    .project.revealed .project-info>*:nth-child(4){transition-delay:.28s}
+    .inline-link span[aria-hidden="true"],.contact-link span[aria-hidden="true"]{display:inline-block;transition:transform .35s cubic-bezier(.16,1,.3,1)}
+    .inline-link:hover span[aria-hidden="true"],.contact-link:hover span[aria-hidden="true"]{transform:translate(4px,-2px)}
+    @keyframes meeting-open{from{opacity:0;transform:translateY(2rem) scale(.975)}to{opacity:1;transform:none}}
+    @keyframes meeting-backdrop{from{opacity:0}to{opacity:1}}
+    @keyframes meeting-copy{from{opacity:0;transform:translateY(1.5rem)}to{opacity:1;transform:none}}
+    @keyframes meeting-step-enter{from{opacity:0;transform:translateY(1.1rem)}to{opacity:1;transform:none}}
+    @keyframes hero-arrive{from{opacity:.4;transform:scale(1.12)}to{opacity:1;transform:scale(1.01)}}
+    @keyframes heading-arrive{from{opacity:0;transform:translateY(2.5rem)}to{opacity:1;transform:none}}
+    @media(max-width:960px){
+      .meeting-dialog{width:min(42rem,94vw)}
+      .meeting-dialog-inner{display:block;min-height:0}
+      .meeting-intro{min-height:0;gap:1.25rem;padding:2.4rem clamp(1.5rem,5vw,3rem)}
+      .meeting-intro h2{font-size:clamp(2.5rem,6vw,3.65rem);max-width:12ch;margin:.4rem 0}
+      .meeting-intro p{max-width:35rem}
+      .meeting-form{min-height:29rem;padding:2rem clamp(1.5rem,5vw,3rem) 2.5rem}
+      .meeting-step-count{margin-bottom:3.5rem}
+    }
+    @media(max-width:760px){
+      .meeting-dialog{width:100%;max-width:none;max-height:100dvh;height:100dvh}
+      .meeting-dialog-inner{height:auto;min-height:100%}
+      .meeting-intro{padding:1.5rem var(--pad) 1.8rem;gap:.6rem}
+      .meeting-intro h2{font-size:clamp(2.35rem,9vw,3.2rem);max-width:12ch;line-height:.93;margin:.45rem 0}
+      .meeting-intro p{font-size:.74rem}
+      .meeting-form{min-height:28rem;padding:1.8rem var(--pad) calc(2rem + env(safe-area-inset-bottom))}
+      .meeting-step-count{margin-bottom:2.6rem}
+      .meeting-fieldset{margin:0}
+    }
+    @media(prefers-reduced-motion:reduce){
+      .project-photo img{clip-path:none;transform:none}
+      .project:not(.revealed) .project-info>*{opacity:1;transform:none}
+    }
   </style>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"ProfessionalService","name":"Estudio RuBa","description":"Arquitectura, construcción y asesoría en Quito, Ecuador.","email":"estudioruba@gmail.com","address":{"@type":"PostalAddress","addressLocality":"Tumbaco","addressRegion":"Quito","addressCountry":"EC"}}</script>
 </head>
@@ -362,7 +432,7 @@
     $$("#mobile-menu a").forEach(link=>link.addEventListener("click",()=>setMenu(false)));
     document.addEventListener("keydown",event=>{if(event.key==="Escape"&&menu.classList.contains("open")){setMenu(false);menuToggle.focus();}});
     const trackedSections=$$("[data-section]");let sectionFrame=0;
-    function updateActiveSection(){sectionFrame=0;const probe=Math.max(header.offsetHeight+24,innerHeight*.28);const atPageEnd=scrollY+innerHeight>=document.documentElement.scrollHeight-2;let active=atPageEnd?$("#contacto"):trackedSections.find(section=>{const rect=section.getBoundingClientRect();return rect.top<=probe&&rect.bottom>probe;});if(!active){active=[...trackedSections].reverse().find(section=>section.getBoundingClientRect().top<=probe)||trackedSections[0];}const index=active.dataset.section;pageIndex.textContent=index+" / 07";const area=active.id==="proyectos"?"proyectos":active.id==="estudio"||["03","04","05","06"].includes(index)?"estudio":active.id==="contacto"?"contacto":"";$$("[data-nav]").forEach(link=>link.setAttribute("aria-current",String(Boolean(area)&&link.dataset.nav===area)));}
+    function updateActiveSection(){sectionFrame=0;document.documentElement.style.setProperty("--scroll-progress",String(scrollY/Math.max(1,document.documentElement.scrollHeight-innerHeight)));const probe=Math.max(header.offsetHeight+24,innerHeight*.28);const atPageEnd=scrollY+innerHeight>=document.documentElement.scrollHeight-2;let active=atPageEnd?$("#contacto"):trackedSections.find(section=>{const rect=section.getBoundingClientRect();return rect.top<=probe&&rect.bottom>probe;});if(!active){active=[...trackedSections].reverse().find(section=>section.getBoundingClientRect().top<=probe)||trackedSections[0];}const index=active.dataset.section;pageIndex.textContent=index+" / 07";const area=active.id==="proyectos"?"proyectos":active.id==="estudio"||["03","04","05","06"].includes(index)?"estudio":active.id==="contacto"?"contacto":"";$$("[data-nav]").forEach(link=>link.setAttribute("aria-current",String(Boolean(area)&&link.dataset.nav===area)));}
     function queueSectionUpdate(){if(!sectionFrame)sectionFrame=requestAnimationFrame(updateActiveSection)}
     addEventListener("scroll",queueSectionUpdate,{passive:true});addEventListener("resize",queueSectionUpdate);updateActiveSection();
     const headerObserver = new IntersectionObserver(([entry]) => header.classList.toggle("is-scrolled",!entry.isIntersecting),{threshold:.88});headerObserver.observe($("#inicio"));
@@ -387,7 +457,7 @@
     const teamDialog=$("#team-dialog");function openTeam(key){const person=team[key];$("#team-dialog-image").src=person.image;$("#team-dialog-image").alt=person.name;$("#team-dialog-title").textContent=person.name;$("#team-dialog-role").textContent=person.role;$("#team-dialog-bio").textContent=person.bio;teamDialog.showModal();}
     $("#team-profile").addEventListener("click",()=>openTeam(currentTeam));$$("[data-open-team]").forEach(button=>button.addEventListener("click",()=>openTeam(button.dataset.openTeam)));
     const meetingDialog=$("#meeting-dialog"), meetingForm=$("#meeting-form"), meetingSteps=$$("[data-meeting-step]"), meetingCount=$("#meeting-step-count"), meetingSuccess=$("#meeting-success");let meetingStep=0,meetingTrigger=null;
-    function setMeetingStep(step){meetingStep=step;meetingSteps.forEach((fieldSet,index)=>fieldSet.hidden=index!==step);meetingCount.textContent="Paso "+String(step+1).padStart(2,"0")+" / 03";meetingCount.hidden=false;meetingSuccess.hidden=true;const first=meetingSteps[step].querySelector("input,textarea");first?.focus();}
+    function setMeetingStep(step){meetingStep=step;meetingDialog.dataset.step=String(step);meetingSteps.forEach((fieldSet,index)=>fieldSet.hidden=index!==step);meetingCount.textContent="Paso "+String(step+1).padStart(2,"0")+" / 03";meetingCount.hidden=false;meetingSuccess.hidden=true;const first=meetingSteps[step].querySelector("input,textarea");first?.focus();}
     function validMeetingStep(){const required=meetingSteps[meetingStep].querySelector("[required]");return required ? required.reportValidity() : true;}
     $("#process-cta").addEventListener("click",event=>{meetingTrigger=event.currentTarget;setMeetingStep(0);meetingDialog.showModal();});
     $$(".meeting-next").forEach(button=>button.addEventListener("click",()=>{if(validMeetingStep())setMeetingStep(Math.min(meetingStep+1,meetingSteps.length-1));}));
