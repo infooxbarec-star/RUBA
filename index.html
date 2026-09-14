@@ -149,6 +149,17 @@
       .meeting-intro h2{font-size:clamp(2.55rem,11vw,3.15rem)}
       .meeting-form{padding-bottom:calc(2rem + env(safe-area-inset-bottom))}
       [data-reveal]{transform:translateY(12px)}
+
+      /* Keep supporting copy comfortable to read and every primary touch target reachable. */
+      .eyebrow,.label{font-size:.7rem}
+      .brand{min-width:44px;min-height:44px;align-items:center}
+      .hero-copy .hero-meta p{font-size:.82rem;line-height:1.55}
+      .hero-project strong{font-size:.78rem}.hero-project span{font-size:.7rem}
+      .project-details span,.project-photo .image-code{font-size:.69rem;line-height:1.45}
+      .service .service-copy,.process-copy p{font-size:.84rem;line-height:1.6}
+      .contact-data{font-size:.73rem;line-height:1.5}
+      .contact-data a,.contact-link,.whatsapp-link{min-height:44px;display:inline-flex;align-items:center}
+      .contact-link{padding:.3rem 0}
     }
     @media (max-width:360px){
       .hero-copy .hero-meta{grid-template-columns:1fr}.hero-copy .hero-meta p{display:none}
